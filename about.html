@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - OpenSourceHub | Discover Amazing Open Source Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ef',
+                        background: '#0a0a0a',
+                        secondary: '#1a1a1a',
+                        accent: {
+                            orange: '#ff5722',
+                            green: '#00c853',
+                            purple: '#8e24aa',
+                            pink: '#e91e63'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px #0ef, 0 0 10px #0ef, 0 0 15px #0ef' },
+                            '50%': { boxShadow: '0 0 10px #0ef, 0 0 20px #0ef, 0 0 30px #0ef' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #0ef, #00c853, #8e24aa, #e91e63);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradient 5s ease infinite;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(14, 239, 255, 0.15);
+        }
+        
+        .glow-border {
+            border: 1px solid rgba(14, 239, 255, 0.2);
+            box-shadow: 0 0 15px rgba(14, 239, 255, 0.1);
+        }
+        
+        .stats-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Modern Navbar Styles */
+        .navbar {
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(14, 239, 255, 0.15);
+        }
+        
+        .nav-item {
+            position: relative;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 0 4px;
+        }
+        
+        .nav-item:hover {
+            background: rgba(14, 239, 255, 0.1);
+            color: #0ef;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.15), rgba(136, 36, 170, 0.15));
+            color: #0ef;
+            box-shadow: 
+                0 4px 15px rgba(14, 239, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                0 0 0 1px rgba(14, 239, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .mobile-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .mobile-nav-item:hover {
+            background: rgba(14, 239, 255, 0.1);
+            color: #0ef;
+        }
+        
+        .mobile-nav-item.active {
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.15), rgba(136, 36, 170, 0.15));
+            color: #0ef;
+            box-shadow: 0 4px 15px rgba(14, 239, 255, 0.2);
+        }
+        
+        /* Updated Sidebar Styles for Right-to-Left Animation */
+        .sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            right: 0;
+            left: auto;
+        }
+        
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        
+        .overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Modern Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #0ef, #00c853);
+            color: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(14, 239, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(14, 239, 255, 0.4);
+            background: linear-gradient(135deg, #00c853, #0ef);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #0ef;
+            color: #0ef;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            font-weight: 600;
+        }
+        
+        .btn-secondary:hover {
+            background: #0ef;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 239, 255, 0.4);
+        }
+        
+        .btn-outline {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(14, 239, 255, 0.1);
+            border-color: #0ef;
+            color: #0ef;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 239, 255, 0.2);
+        }
+        
+        /* Mission Section Styles */
+        .mission-section {
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.05), rgba(142, 36, 170, 0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(14, 239, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mission-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.1), rgba(142, 36, 170, 0.1));
+            filter: blur(40px);
+            z-index: 0;
+        }
+        
+        /* Team Member Card Styles */
+        .team-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(14, 239, 255, 0.2);
+            border-color: rgba(14, 239, 255, 0.4);
+        }
+        
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(14, 239, 255, 0.05), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .team-card:hover::before {
+            left: 100%;
+        }
+        
+        /* Value Card Styles */
+        .value-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(14, 239, 255, 0.1);
+        }
+        
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(14, 239, 255, 0.03), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .value-card:hover::before {
+            left: 100%;
+        }
+        
+        /* Ripple effect styles */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+         /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0ef;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00c853;
+        }
+    </style>
+</head>
+<body class="bg-background font-poppins">
+    <!-- Modern Navigation -->
+    <nav class="navbar py-3 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-accent-purple flex items-center justify-center animate-pulse">
+                    <i class="fas fa-code text-background text-xl"></i>
+                </div>
+                <span class="text-2xl font-bold gradient-text">OpenSourceHub</span>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-1 relative">
+                <a href="index.html" class="nav-item flex items-center" data-page="home">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+                <a href="about.html" class="nav-item flex items-center active" data-page="about">
+                    <i class="fas fa-info-circle mr-2"></i> About
+                </a>
+                <a href="projects.html" class="nav-item flex items-center" data-page="projects">
+                    <i class="fas fa-th-large mr-2"></i> Projects
+                </a>
+                <a href="categories.html" class="nav-item flex items-center" data-page="categories">
+                    <i class="fas fa-tags mr-2"></i> Categories
+                </a>
+                <a href="submit.html" class="nav-item flex items-center" data-page="submit">
+                    <i class="fas fa-plus-circle mr-2"></i> Submit
+                </a>    
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="btn-primary hidden md:flex text-background px-5 py-2.5 rounded-xl font-medium transition duration-300 items-center shadow-lg">
+                    <i class="fas fa-rocket mr-2"></i> Get Started
+                </button>
+                <button id="menuToggle" class="lg:hidden text-white bg-secondary/50 p-2 rounded-lg">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div id="sidebarOverlay" class="overlay fixed inset-0 bg-black bg-opacity-70 z-40"></div>
+    <div id="mobileSidebar" class="sidebar fixed top-0 right-0 h-full w-80 bg-secondary z-50 p-6 border-l border-gray-800">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent-purple flex items-center justify-center">
+                    <i class="fas fa-code text-background"></i>
+                </div>
+                <span class="text-xl font-bold gradient-text">OpenSourceHub</span>
+            </div>
+            <button id="closeSidebar" class="text-white bg-secondary/50 p-2 rounded-lg">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+        <div class="flex flex-col mb-8">
+            <a href="index.html" class="mobile-nav-item" data-page="home">
+                <i class="fas fa-home mr-3 w-6 text-center"></i> Home
+            </a>
+            <a href="about.html" class="mobile-nav-item active" data-page="about">
+                <i class="fas fa-info-circle mr-3 w-6 text-center"></i> About
+            </a>
+            <a href="projects.html" class="mobile-nav-item" data-page="projects">
+                <i class="fas fa-th-large mr-3 w-6 text-center"></i> Projects
+            </a>
+            <a href="categories.html" class="mobile-nav-item" data-page="categories">
+                <i class="fas fa-tags mr-3 w-6 text-center"></i> Categories
+            </a>
+            <a href="submit.html" class="mobile-nav-item" data-page="submit">
+                <i class="fas fa-plus-circle mr-3 w-6 text-center"></i> Submit
+            </a>
+        </div>
+        
+        <div class="absolute bottom-6 left-6 right-6">
+            <button class="btn-primary w-full text-background py-3 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg">
+                <i class="fas fa-rocket mr-2"></i> Get Started
+            </button>
+        </div>
+    </div>
+
+    <!-- About Hero Section -->
+    <section class="py-24 px-4 relative overflow-hidden">
+        <div class="absolute top-10 right-10 w-72 h-72 bg-primary rounded-full filter blur-3xl opacity-10 animate-float"></div>
+        <div class="absolute bottom-10 left-10 w-64 h-64 bg-accent-purple rounded-full filter blur-3xl opacity-10 animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-pink rounded-full filter blur-3xl opacity-5 animate-float" style="animation-delay: 4s;"></div>
+        
+        <div class="container mx-auto text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+                About <span class="gradient-text">OpenSourceHub</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-10 animate-fade-in">
+                We're on a mission to connect developers with amazing open source projects and foster a global community of collaboration, innovation, and knowledge sharing.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 animate-fade-in">
+                <button class="btn-primary text-background px-6 py-3 rounded-xl font-medium flex items-center shadow-lg mx-2 mb-3">
+                    <i class="fas fa-rocket mr-2"></i> Join Our Community
+                </button>
+                <button class="btn-secondary px-6 py-3 rounded-xl font-medium flex items-center mx-2 mb-3">
+                    <i class="fas fa-heart mr-2"></i> Support Our Mission
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-16 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="mission-section rounded-2xl p-8 md:p-12 relative overflow-hidden">
+                <!-- Background Decorations -->
+                <div class="mission-decoration w-72 h-72 -top-20 -right-10"></div>
+                <div class="mission-decoration w-64 h-64 -bottom-20 -left-10"></div>
+                
+                <div class="text-center mb-12 relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Mission</h2>
+                    <p class="text-gray-300 text-lg max-w-3xl mx-auto">
+                        OpenSourceHub exists to democratize access to open source software, making it easier for developers to discover, contribute to, and learn from projects that are shaping the future of technology.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                    <div class="bg-background/50 rounded-2xl p-6 value-card glow-border">
+                        <div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-4">
+                            <i class="fas fa-bullseye text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Our Vision</h3>
+                        <p class="text-gray-300">
+                            We envision a world where every developer can easily find and contribute to open source projects that align with their interests and skills, accelerating innovation and collaboration across the globe.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-background/50 rounded-2xl p-6 value-card glow-border">
+                        <div class="w-16 h-16 rounded-2xl bg-accent-green flex items-center justify-center mb-4">
+                            <i class="fas fa-handshake text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Our Purpose</h3>
+                        <p class="text-gray-300">
+                            To build the most comprehensive and user-friendly platform for discovering open source projects, while fostering a supportive community that celebrates contribution and shared knowledge.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-16 px-4 bg-secondary/30">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Values</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">The principles that guide everything we do</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Value 1 -->
+                <div class="bg-background rounded-2xl p-6 text-center value-card glow-border">
+                    <div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-gem text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Quality Over Quantity</h3>
+                    <p class="text-gray-400">We carefully curate projects to ensure they meet high standards of quality, documentation, and maintenance.</p>
+                </div>
+                
+                <!-- Value 2 -->
+                <div class="bg-background rounded-2xl p-6 text-center value-card glow-border">
+                    <div class="w-16 h-16 rounded-2xl bg-accent-green flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Community Driven</h3>
+                    <p class="text-gray-400">Our platform is built by and for the open source community. We value feedback, contributions, and collaboration.</p>
+                </div>
+                
+                <!-- Value 3 -->
+                <div class="bg-background rounded-2xl p-6 text-center value-card glow-border">
+                    <div class="w-16 h-16 rounded-2xl bg-accent-purple flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lock-open text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Openness & Transparency</h3>
+                    <p class="text-gray-400">We believe in open processes, transparent decision-making, and sharing our own journey as we build this platform.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Meet Our Team</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">The passionate developers and designers behind OpenSourceHub</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Team Member 1 -->
+                <div class="bg-secondary rounded-2xl p-6 text-center team-card glow-border">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-primary to-accent-purple mx-auto mb-4 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Alex Johnson" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Alex Johnson</h3>
+                    <p class="text-primary mb-3">Founder & Lead Developer</p>
+                    <p class="text-gray-400 text-sm mb-4">Passionate about open source and building tools that help developers create amazing things.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="bg-secondary rounded-2xl p-6 text-center team-card glow-border">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-accent-green to-accent-purple mx-auto mb-4 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Maria Garcia" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Maria Garcia</h3>
+                    <p class="text-primary mb-3">UI/UX Designer</p>
+                    <p class="text-gray-400 text-sm mb-4">Loves creating beautiful and intuitive user experiences that make technology accessible to everyone.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="bg-secondary rounded-2xl p-6 text-center team-card glow-border">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-accent-purple to-accent-pink mx-auto mb-4 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Sam Wilson" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Sam Wilson</h3>
+                    <p class="text-primary mb-3">Community Manager</p>
+                    <p class="text-gray-400 text-sm mb-4">Connecting with the community and helping grow the platform through outreach and engagement.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="bg-secondary rounded-2xl p-6 text-center team-card glow-border">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-accent-orange to-primary mx-auto mb-4 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Jordan Lee" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Jordan Lee</h3>
+                    <p class="text-primary mb-3">Full Stack Developer</p>
+                    <p class="text-gray-400 text-sm mb-4">Building the core platform and ensuring high performance, scalability, and reliability.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-dev"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stats-card rounded-2xl p-6 text-center">
+                    <div class="text-3xl font-bold text-primary mb-2">5,000+</div>
+                    <div class="text-gray-400">Open Source Projects</div>
+                </div>
+                <div class="stats-card rounded-2xl p-6 text-center">
+                    <div class="text-3xl font-bold text-accent-green mb-2">120+</div>
+                    <div class="text-gray-400">Categories</div>
+                </div>
+                <div class="stats-card rounded-2xl p-6 text-center">
+                    <div class="text-3xl font-bold text-accent-purple mb-2">50K+</div>
+                    <div class="text-gray-400">Developers</div>
+                </div>
+                <div class="stats-card rounded-2xl p-6 text-center">
+                    <div class="text-3xl font-bold text-accent-pink mb-2">15K+</div>
+                    <div class="text-gray-400">Stars Given</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="py-16 px-4 bg-secondary/30">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Join Our Community</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Be part of something bigger. Connect, collaborate, and contribute.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <!-- Community Item 1 -->
+                <div class="bg-background rounded-2xl p-6 text-center value-card glow-border">
+                    <div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-github text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Contribute</h3>
+                    <p class="text-gray-400 mb-4">Help us improve OpenSourceHub by submitting issues, feature requests, or code contributions.</p>
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300">
+                        View on GitHub
+                    </button>
+                </div>
+                
+                <!-- Community Item 2 -->
+                <div class="bg-background rounded-2xl p-6 text-center value-card glow-border">
+                    <div class="w-16 h-16 rounded-2xl bg-accent-green flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-discord text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Discuss</h3>
+                    <p class="text-gray-400 mb-4">Join our Discord community to chat with other developers, share projects, and get help.</p>
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300">
+                        Join Discord
+                    </button>
+                </div>
+                
+                <!-- Community Item 3 -->
+                <div class="bg-background rounded-2xl p-6 text-center value-card glow-border">
+                    <div class="w-16 h-16 rounded-2xl bg-accent-purple flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Stay Updated</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter to get the latest updates, featured projects, and community news.</p>
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary py-12 px-4 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                            <i class="fas fa-code text-background"></i>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">OpenSourceHub</span>
+                    </div>
+                    <p class="text-gray-400">Discover and contribute to amazing open source projects from around the world.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="projects.html" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Projects</a></li>
+                        <li><a href="categories.html" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Categories</a></li>
+                        <li><a href="index.html#trending" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Trending</a></li>
+                        <li><a href="index.html#featured" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> New Projects</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Community</h3>
+                    <ul class="space-y-2">
+                        <li><a href="submit.html" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Submit Project</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Guidelines</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Contributors</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Events</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Connect</h3>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400">© 2023 OpenSourceHub. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary text-background flex items-center justify-center shadow-lg hover:animate-pulse-glow transition duration-300 opacity-0 invisible z-40">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile sidebar functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileSidebar.classList.add('open');
+            sidebarOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeSidebar.addEventListener('click', () => {
+            mobileSidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+        
+        sidebarOverlay.addEventListener('click', () => {
+            mobileSidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+        
+        // Close mobile sidebar when clicking on a link
+        document.querySelectorAll('#mobileSidebar .mobile-nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileSidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Scroll to top button functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+                scrollToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                scrollToTopBtn.classList.remove('opacity-100', 'visible');
+                scrollToTopBtn.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Enhanced button interactions with ripple effect
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-outline');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Create ripple element
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+                    
+                    this.appendChild(ripple);
+                    
+                    // Remove ripple after animation
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

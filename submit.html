@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Project - OpenSourceHub | Share Your Open Source Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ef',
+                        background: '#0a0a0a',
+                        secondary: '#1a1a1a',
+                        accent: {
+                            orange: '#ff5722',
+                            green: '#00c853',
+                            purple: '#8e24aa',
+                            pink: '#e91e63'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px #0ef, 0 0 10px #0ef, 0 0 15px #0ef' },
+                            '50%': { boxShadow: '0 0 10px #0ef, 0 0 20px #0ef, 0 0 30px #0ef' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #0ef, #00c853, #8e24aa, #e91e63);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradient 5s ease infinite;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(14, 239, 255, 0.15);
+        }
+        
+        .glow-border {
+            border: 1px solid rgba(14, 239, 255, 0.2);
+            box-shadow: 0 0 15px rgba(14, 239, 255, 0.1);
+        }
+        
+        .stats-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Modern Navbar Styles */
+        .navbar {
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(14, 239, 255, 0.15);
+        }
+        
+        .nav-item {
+            position: relative;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 0 4px;
+        }
+        
+        .nav-item:hover {
+            background: rgba(14, 239, 255, 0.1);
+            color: #0ef;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.15), rgba(136, 36, 170, 0.15));
+            color: #0ef;
+            box-shadow: 
+                0 4px 15px rgba(14, 239, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                0 0 0 1px rgba(14, 239, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .mobile-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .mobile-nav-item:hover {
+            background: rgba(14, 239, 255, 0.1);
+            color: #0ef;
+        }
+        
+        .mobile-nav-item.active {
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.15), rgba(136, 36, 170, 0.15));
+            color: #0ef;
+            box-shadow: 0 4px 15px rgba(14, 239, 255, 0.2);
+        }
+        
+        /* Updated Sidebar Styles for Right-to-Left Animation */
+        .sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            right: 0;
+            left: auto;
+        }
+        
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        
+        .overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Modern Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #0ef, #00c853);
+            color: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(14, 239, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(14, 239, 255, 0.4);
+            background: linear-gradient(135deg, #00c853, #0ef);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #0ef;
+            color: #0ef;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            font-weight: 600;
+        }
+        
+        .btn-secondary:hover {
+            background: #0ef;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 239, 255, 0.4);
+        }
+        
+        .btn-outline {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(14, 239, 255, 0.1);
+            border-color: #0ef;
+            color: #0ef;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 239, 255, 0.2);
+        }
+        
+        /* Form Section Styles */
+        .form-section {
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.05), rgba(142, 36, 170, 0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(14, 239, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.1), rgba(142, 36, 170, 0.1));
+            filter: blur(40px);
+            z-index: 0;
+        }
+        
+        /* Form Input Styles */
+        .form-input {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-input:focus {
+            background: rgba(26, 26, 26, 0.9);
+            border-color: #0ef;
+            box-shadow: 0 0 0 3px rgba(14, 239, 255, 0.1);
+        }
+        
+        .form-label {
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        /* File Upload Styles */
+        .file-upload {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: #0ef;
+            background: rgba(14, 239, 255, 0.05);
+        }
+        
+        .file-upload.dragover {
+            border-color: #0ef;
+            background: rgba(14, 239, 255, 0.1);
+        }
+        
+        /* Success Message Styles */
+        .success-message {
+            background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(14, 239, 255, 0.1));
+            border: 1px solid rgba(0, 200, 83, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Guidelines Section Styles */
+        .guidelines-section {
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.03), rgba(142, 36, 170, 0.03));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(14, 239, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .guidelines-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.1), rgba(142, 36, 170, 0.1));
+            filter: blur(40px);
+            z-index: 0;
+        }
+        
+        /* Ripple effect styles */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0ef;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00c853;
+        }
+        
+        /* Validation styles */
+        .error-message {
+            color: #ff5722;
+            font-size: 0.875rem;
+            margin-top: 4px;
+        }
+        
+        .form-input.error {
+            border-color: #ff5722;
+        }
+        
+        .form-input.success {
+            border-color: #00c853;
+        }
+    </style>
+</head>
+<body class="bg-background font-poppins">
+    <!-- Modern Navigation -->
+    <nav class="navbar py-3 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-accent-purple flex items-center justify-center animate-pulse">
+                    <i class="fas fa-code text-background text-xl"></i>
+                </div>
+                <span class="text-2xl font-bold gradient-text">OpenSourceHub</span>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-1 relative">
+                <a href="index.html" class="nav-item flex items-center" data-page="home">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+                <a href="about.html" class="nav-item flex items-center" data-page="about">
+                    <i class="fas fa-info-circle mr-2"></i> About
+                </a>
+                <a href="projects.html" class="nav-item flex items-center" data-page="projects">
+                    <i class="fas fa-th-large mr-2"></i> Projects
+                </a>
+                <a href="categories.html" class="nav-item flex items-center" data-page="categories">
+                    <i class="fas fa-tags mr-2"></i> Categories
+                </a>
+                <a href="submit.html" class="nav-item flex items-center active" data-page="submit">
+                    <i class="fas fa-plus-circle mr-2"></i> Submit
+                </a>    
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="btn-primary hidden md:flex text-background px-5 py-2.5 rounded-xl font-medium transition duration-300 items-center shadow-lg">
+                    <i class="fas fa-rocket mr-2"></i> Get Started
+                </button>
+                <button id="menuToggle" class="lg:hidden text-white bg-secondary/50 p-2 rounded-lg">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div id="sidebarOverlay" class="overlay fixed inset-0 bg-black bg-opacity-70 z-40"></div>
+    <div id="mobileSidebar" class="sidebar fixed top-0 right-0 h-full w-80 bg-secondary z-50 p-6 border-l border-gray-800">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent-purple flex items-center justify-center">
+                    <i class="fas fa-code text-background"></i>
+                </div>
+                <span class="text-xl font-bold gradient-text">OpenSourceHub</span>
+            </div>
+            <button id="closeSidebar" class="text-white bg-secondary/50 p-2 rounded-lg">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+        <div class="flex flex-col mb-8">
+            <a href="index.html" class="mobile-nav-item" data-page="home">
+                <i class="fas fa-home mr-3 w-6 text-center"></i> Home
+            </a>
+            <a href="about.html" class="mobile-nav-item" data-page="about">
+                <i class="fas fa-info-circle mr-3 w-6 text-center"></i> About
+            </a>
+            <a href="projects.html" class="mobile-nav-item" data-page="projects">
+                <i class="fas fa-th-large mr-3 w-6 text-center"></i> Projects
+            </a>
+            <a href="categories.html" class="mobile-nav-item" data-page="categories">
+                <i class="fas fa-tags mr-3 w-6 text-center"></i> Categories
+            </a>
+            <a href="submit.html" class="mobile-nav-item active" data-page="submit">
+                <i class="fas fa-plus-circle mr-3 w-6 text-center"></i> Submit
+            </a>
+        </div>
+        
+        <div class="absolute bottom-6 left-6 right-6">
+            <button class="btn-primary w-full text-background py-3 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg">
+                <i class="fas fa-rocket mr-2"></i> Get Started
+            </button>
+        </div>
+    </div>
+
+    <!-- Submit Hero Section -->
+    <section class="py-20 px-4 relative overflow-hidden">
+        <div class="absolute top-10 right-10 w-72 h-72 bg-primary rounded-full filter blur-3xl opacity-10 animate-float"></div>
+        <div class="absolute bottom-10 left-10 w-64 h-64 bg-accent-purple rounded-full filter blur-3xl opacity-10 animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-pink rounded-full filter blur-3xl opacity-5 animate-float" style="animation-delay: 4s;"></div>
+        
+        <div class="container mx-auto text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+                Submit <span class="gradient-text">Project</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-10 animate-fade-in">
+                Share your open source project with our community of developers. Get feedback, contributors, and recognition for your work.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 animate-fade-in">
+                <button class="btn-primary text-background px-6 py-3 rounded-xl font-medium flex items-center shadow-lg mx-2 mb-3">
+                    <i class="fas fa-lightbulb mr-2"></i> Submission Guidelines
+                </button>
+                <button class="btn-secondary px-6 py-3 rounded-xl font-medium flex items-center mx-2 mb-3">
+                    <i class="fas fa-question-circle mr-2"></i> Need Help?
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12 px-4">
+        <div class="container mx-auto max-w-4xl">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Guidelines Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="guidelines-section rounded-2xl p-6 sticky top-24">
+                        <!-- Background Decorations -->
+                        <div class="guidelines-decoration w-48 h-48 -top-10 -right-10"></div>
+                        <div class="guidelines-decoration w-40 h-40 -bottom-10 -left-10"></div>
+                        
+                        <div class="relative z-10">
+                            <h3 class="text-xl font-bold mb-4 flex items-center">
+                                <i class="fas fa-clipboard-list mr-2 text-primary"></i> Submission Guidelines
+                            </h3>
+                            
+                            <ul class="space-y-4 text-sm">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-accent-green mr-2 mt-1"></i>
+                                    <span>Project must be open source with a clear license</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-accent-green mr-2 mt-1"></i>
+                                    <span>Provide a clear description and project goals</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-accent-green mr-2 mt-1"></i>
+                                    <span>Include relevant tags for better discovery</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-accent-green mr-2 mt-1"></i>
+                                    <span>GitHub repository must be publicly accessible</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-accent-green mr-2 mt-1"></i>
+                                    <span>Project should have some level of activity</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-accent-green mr-2 mt-1"></i>
+                                    <span>No spam, advertising, or malicious projects</span>
+                                </li>
+                            </ul>
+                            
+                            <div class="mt-6 p-4 bg-background/50 rounded-xl">
+                                <h4 class="font-bold mb-2 text-primary">Review Process</h4>
+                                <p class="text-sm text-gray-400">
+                                    Projects are reviewed within 48 hours. You'll receive an email notification once your project is published or if we need more information.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Form Section -->
+                <div class="lg:col-span-2">
+                    <div class="form-section rounded-2xl p-6 md:p-8 relative overflow-hidden">
+                        <!-- Background Decorations -->
+                        <div class="form-decoration w-72 h-72 -top-20 -right-10"></div>
+                        <div class="form-decoration w-64 h-64 -bottom-20 -left-10"></div>
+                        
+                        <div class="relative z-10">
+                            <h2 class="text-2xl md:text-3xl font-bold mb-2">Project Information</h2>
+                            <p class="text-gray-400 mb-6">Fill in the details about your open source project</p>
+                            
+                            <form id="projectForm" class="space-y-6">
+                                <!-- Project Name -->
+                                <div>
+                                    <label for="projectName" class="form-label">Project Name *</label>
+                                    <input 
+                                        type="text" 
+                                        id="projectName" 
+                                        class="form-input w-full rounded-xl py-3 px-4 focus:outline-none"
+                                        placeholder="Enter your project name"
+                                        required
+                                    >
+                                    <div id="projectNameError" class="error-message hidden">Project name is required</div>
+                                </div>
+                                
+                                <!-- GitHub URL -->
+                                <div>
+                                    <label for="githubUrl" class="form-label">GitHub Repository URL *</label>
+                                    <input 
+                                        type="url" 
+                                        id="githubUrl" 
+                                        class="form-input w-full rounded-xl py-3 px-4 focus:outline-none"
+                                        placeholder="https://github.com/username/repository"
+                                        required
+                                    >
+                                    <div id="githubUrlError" class="error-message hidden">Valid GitHub URL is required</div>
+                                </div>
+                                
+                                <!-- Description -->
+                                <div>
+                                    <label for="projectDescription" class="form-label">Project Description *</label>
+                                    <textarea 
+                                        id="projectDescription" 
+                                        rows="5"
+                                        class="form-input w-full rounded-xl py-3 px-4 focus:outline-none resize-none"
+                                        placeholder="Describe your project, its purpose, and key features..."
+                                        required
+                                    ></textarea>
+                                    <div id="descriptionError" class="error-message hidden">Project description is required</div>
+                                </div>
+                                
+                                <!-- Category -->
+                                <div>
+                                    <label for="projectCategory" class="form-label">Primary Category *</label>
+                                    <select 
+                                        id="projectCategory" 
+                                        class="form-input w-full rounded-xl py-3 px-4 focus:outline-none appearance-none"
+                                        required
+                                    >
+                                        <option value="">Select a category</option>
+                                        <option value="web">Web Development</option>
+                                        <option value="ai">AI & Machine Learning</option>
+                                        <option value="mobile">Mobile Development</option>
+                                        <option value="devops">DevOps & Infrastructure</option>
+                                        <option value="data">Data Science</option>
+                                        <option value="tools">Developer Tools</option>
+                                        <option value="games">Game Development</option>
+                                        <option value="security">Cybersecurity</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                                    <div id="categoryError" class="error-message hidden">Please select a category</div>
+                                </div>
+                                
+                                <!-- Tags -->
+                                <div>
+                                    <label for="projectTags" class="form-label">Tags *</label>
+                                    <input 
+                                        type="text" 
+                                        id="projectTags" 
+                                        class="form-input w-full rounded-xl py-3 px-4 focus:outline-none"
+                                        placeholder="React, JavaScript, API, etc. (comma separated)"
+                                        required
+                                    >
+                                    <div class="text-sm text-gray-400 mt-1">Add relevant tags to help users discover your project</div>
+                                    <div id="tagsError" class="error-message hidden">At least one tag is required</div>
+                                </div>
+                                
+                                <!-- Logo Upload -->
+                                <div>
+                                    <label class="form-label">Project Logo (Optional)</label>
+                                    <div 
+                                        id="logoUpload" 
+                                        class="file-upload rounded-xl p-6 text-center cursor-pointer transition duration-300"
+                                    >
+                                        <i class="fas fa-cloud-upload-alt text-3xl text-primary mb-3"></i>
+                                        <p class="font-medium">Drag & drop your logo here</p>
+                                        <p class="text-sm text-gray-400 mt-1">or click to browse (PNG, JPG, max 2MB)</p>
+                                        <input type="file" id="logoFile" class="hidden" accept="image/png, image/jpeg">
+                                    </div>
+                                    <div id="logoPreview" class="mt-4 hidden">
+                                        <img id="previewImage" class="max-h-32 rounded-xl mx-auto">
+                                        <button type="button" id="removeLogo" class="btn-outline mt-2 px-4 py-1 rounded-lg text-sm mx-auto block">
+                                            Remove Logo
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- License -->
+                                <div>
+                                    <label for="projectLicense" class="form-label">License *</label>
+                                    <select 
+                                        id="projectLicense" 
+                                        class="form-input w-full rounded-xl py-3 px-4 focus:outline-none appearance-none"
+                                        required
+                                    >
+                                        <option value="">Select a license</option>
+                                        <option value="mit">MIT License</option>
+                                        <option value="apache">Apache License 2.0</option>
+                                        <option value="gpl">GNU GPL v3</option>
+                                        <option value="bsd">BSD 3-Clause</option>
+                                        <option value="mpl">Mozilla Public License 2.0</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                                    <div id="licenseError" class="error-message hidden">Please select a license</div>
+                                </div>
+                                
+                                <!-- Website (Optional) -->
+                                <div>
+                                    <label for="projectWebsite" class="form-label">Project Website (Optional)</label>
+                                    <input 
+                                        type="url" 
+                                        id="projectWebsite" 
+                                        class="form-input w-full rounded-xl py-3 px-4 focus:outline-none"
+                                        placeholder="https://yourproject.com"
+                                    >
+                                </div>
+                                
+                                <!-- Submit Button -->
+                                <div class="pt-4">
+                                    <button 
+                                        type="submit" 
+                                        class="btn-primary w-full py-3.5 rounded-xl font-medium flex items-center justify-center transition duration-300"
+                                    >
+                                        <i class="fas fa-paper-plane mr-2"></i> Submit Project
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <!-- Success Message -->
+                            <div id="successMessage" class="success-message rounded-2xl p-6 mt-6 text-center hidden">
+                                <i class="fas fa-check-circle text-4xl text-accent-green mb-4"></i>
+                                <h3 class="text-xl font-bold mb-2">Project Submitted Successfully!</h3>
+                                <p class="text-gray-300 mb-4">
+                                    Thank you for submitting your project. Our team will review it and you'll receive a notification within 48 hours.
+                                </p>
+                                <button id="submitAnother" class="btn-outline px-6 py-2 rounded-xl">
+                                    Submit Another Project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 px-4 bg-secondary/30">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Common questions about submitting projects to OpenSourceHub</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- FAQ 1 -->
+                <div class="bg-background rounded-2xl p-6 glow-border">
+                    <h3 class="text-lg font-bold mb-2 flex items-center">
+                        <i class="fas fa-question-circle text-primary mr-2"></i> How long does review take?
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                        Projects are typically reviewed within 48 hours. You'll receive an email notification once your project is published or if we need more information.
+                    </p>
+                </div>
+                
+                <!-- FAQ 2 -->
+                <div class="bg-background rounded-2xl p-6 glow-border">
+                    <h3 class="text-lg font-bold mb-2 flex items-center">
+                        <i class="fas fa-question-circle text-primary mr-2"></i> What makes a good project description?
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                        A good description clearly explains what your project does, its purpose, key features, and technologies used. It should be concise but informative.
+                    </p>
+                </div>
+                
+                <!-- FAQ 3 -->
+                <div class="bg-background rounded-2xl p-6 glow-border">
+                    <h3 class="text-lg font-bold mb-2 flex items-center">
+                        <i class="fas fa-question-circle text-primary mr-2"></i> Can I update my project after submission?
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                        Yes, you can update your project information at any time after it's published. Simply visit your project page and click the "Edit" button.
+                    </p>
+                </div>
+                
+                <!-- FAQ 4 -->
+                <div class="bg-background rounded-2xl p-6 glow-border">
+                    <h3 class="text-lg font-bold mb-2 flex items-center">
+                        <i class="fas fa-question-circle text-primary mr-2"></i> What if my project is rejected?
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                        If your project doesn't meet our guidelines, we'll provide feedback on what needs to be improved. You can resubmit after making the necessary changes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary py-12 px-4 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                            <i class="fas fa-code text-background"></i>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">OpenSourceHub</span>
+                    </div>
+                    <p class="text-gray-400">Discover and contribute to amazing open source projects from around the world.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="projects.html" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Projects</a></li>
+                        <li><a href="categories.html" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Categories</a></li>
+                        <li><a href="index.html#trending" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Trending</a></li>
+                        <li><a href="index.html#featured" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> New Projects</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Community</h3>
+                    <ul class="space-y-2">
+                        <li><a href="submit.html" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Submit Project</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Guidelines</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Contributors</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i> Events</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Connect</h3>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary transition duration-300">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400">© 2023 OpenSourceHub. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary text-background flex items-center justify-center shadow-lg hover:animate-pulse-glow transition duration-300 opacity-0 invisible z-40">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile sidebar functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileSidebar.classList.add('open');
+            sidebarOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeSidebar.addEventListener('click', () => {
+            mobileSidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+        
+        sidebarOverlay.addEventListener('click', () => {
+            mobileSidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+        
+        // Close mobile sidebar when clicking on a link
+        document.querySelectorAll('#mobileSidebar .mobile-nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileSidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Scroll to top button functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+                scrollToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                scrollToTopBtn.classList.remove('opacity-100', 'visible');
+                scrollToTopBtn.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Enhanced button interactions with ripple effect
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-outline');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Create ripple element
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+                    
+                    this.appendChild(ripple);
+                    
+                    // Remove ripple after animation
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // File upload functionality
+            const logoUpload = document.getElementById('logoUpload');
+            const logoFile = document.getElementById('logoFile');
+            const logoPreview = document.getElementById('logoPreview');
+            const previewImage = document.getElementById('previewImage');
+            const removeLogo = document.getElementById('removeLogo');
+            
+            logoUpload.addEventListener('click', () => {
+                logoFile.click();
+            });
+            
+            logoUpload.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                logoUpload.classList.add('dragover');
+            });
+            
+            logoUpload.addEventListener('dragleave', () => {
+                logoUpload.classList.remove('dragover');
+            });
+            
+            logoUpload.addEventListener('drop', (e) => {
+                e.preventDefault();
+                logoUpload.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length) {
+                    logoFile.files = e.dataTransfer.files;
+                    handleFileSelect(e.dataTransfer.files[0]);
+                }
+            });
+            
+            logoFile.addEventListener('change', (e) => {
+                if (e.target.files.length) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+            
+            function handleFileSelect(file) {
+                // Check if file is an image
+                if (!file.type.match('image.*')) {
+                    alert('Please select an image file (PNG or JPG)');
+                    return;
+                }
+                
+                // Check file size (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('File size must be less than 2MB');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    previewImage.src = e.target.result;
+                    logoPreview.classList.remove('hidden');
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            removeLogo.addEventListener('click', () => {
+                logoPreview.classList.add('hidden');
+                logoFile.value = '';
+            });
+            
+            // Form validation and submission
+            const projectForm = document.getElementById('projectForm');
+            const successMessage = document.getElementById('successMessage');
+            const submitAnother = document.getElementById('submitAnother');
+            
+            projectForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Reset error states
+                resetErrors();
+                
+                // Validate form
+                let isValid = true;
+                
+                // Project Name
+                const projectName = document.getElementById('projectName');
+                if (!projectName.value.trim()) {
+                    showError(projectName, 'projectNameError', 'Project name is required');
+                    isValid = false;
+                }
+                
+                // GitHub URL
+                const githubUrl = document.getElementById('githubUrl');
+                if (!githubUrl.value.trim()) {
+                    showError(githubUrl, 'githubUrlError', 'GitHub URL is required');
+                    isValid = false;
+                } else if (!isValidGitHubUrl(githubUrl.value)) {
+                    showError(githubUrl, 'githubUrlError', 'Please enter a valid GitHub repository URL');
+                    isValid = false;
+                }
+                
+                // Description
+                const projectDescription = document.getElementById('projectDescription');
+                if (!projectDescription.value.trim()) {
+                    showError(projectDescription, 'descriptionError', 'Project description is required');
+                    isValid = false;
+                }
+                
+                // Category
+                const projectCategory = document.getElementById('projectCategory');
+                if (!projectCategory.value) {
+                    showError(projectCategory, 'categoryError', 'Please select a category');
+                    isValid = false;
+                }
+                
+                // Tags
+                const projectTags = document.getElementById('projectTags');
+                if (!projectTags.value.trim()) {
+                    showError(projectTags, 'tagsError', 'At least one tag is required');
+                    isValid = false;
+                }
+                
+                // License
+                const projectLicense = document.getElementById('projectLicense');
+                if (!projectLicense.value) {
+                    showError(projectLicense, 'licenseError', 'Please select a license');
+                    isValid = false;
+                }
+                
+                // If form is valid, show success message
+                if (isValid) {
+                    // In a real application, you would submit the form data to a server here
+                    // For this demo, we'll just show the success message
+                    projectForm.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    
+                    // Scroll to success message
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+            
+            submitAnother.addEventListener('click', () => {
+                // Reset form and show it again
+                projectForm.reset();
+                projectForm.classList.remove('hidden');
+                successMessage.classList.add('hidden');
+                logoPreview.classList.add('hidden');
+                resetErrors();
+                
+                // Scroll to top of form
+                projectForm.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            function showError(inputElement, errorElementId, message) {
+                inputElement.classList.add('error');
+                const errorElement = document.getElementById(errorElementId);
+                errorElement.textContent = message;
+                errorElement.classList.remove('hidden');
+            }
+            
+            function resetErrors() {
+                // Remove error classes from all inputs
+                document.querySelectorAll('.form-input').forEach(input => {
+                    input.classList.remove('error');
+                });
+                
+                // Hide all error messages
+                document.querySelectorAll('.error-message').forEach(error => {
+                    error.classList.add('hidden');
+                });
+            }
+            
+            function isValidGitHubUrl(url) {
+                const githubRegex = /^https?:\/\/(www\.)?github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-_.]+\/?$/;
+                return githubRegex.test(url);
+            }
+        });
+    </script>
+</body>
+</html>

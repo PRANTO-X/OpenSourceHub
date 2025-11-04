@@ -32,7 +32,8 @@
                         'float': 'float 6s ease-in-out infinite',
                         'gradient': 'gradient 8s ease infinite',
                         'slide-in-right': 'slideInRight 0.3s ease-out',
-                        'slide-out-right': 'slideOutRight 0.3s ease-in'
+                        'slide-out-right': 'slideOutRight 0.3s ease-in',
+                        'enhanced-float': 'enhancedFloat 3s ease-in-out infinite'
                     },
                     keyframes: {
                         scroll: {
@@ -62,6 +63,14 @@
                         slideOutRight: {
                             '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(100%)' }
+                        },
+                        enhancedFloat: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '33%': { transform: 'translateY(-10px) rotate(1deg)' },
+                            '66%': { transform: 'translateY(-5px) rotate(-1deg)' }
+                        },
+                        rippleAnimation: {
+                            'to': { transform: 'scale(4)', opacity: '0' }
                         }
                     }
                 }
@@ -76,7 +85,7 @@
             overflow-x: hidden;
         }
         
-        .gradient-text {
+         .gradient-text {
             background: linear-gradient(90deg, #0ef, #00c853, #8e24aa, #e91e63);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -203,6 +212,298 @@
             visibility: visible;
         }
         
+        /* Modern Button Hover Effects */
+        .btn-primary {
+            background: linear-gradient(135deg, #0ef, #00c853);
+            color: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(14, 239, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(14, 239, 255, 0.4);
+            background: linear-gradient(135deg, #00c853, #0ef);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #0ef;
+            color: #0ef;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            font-weight: 600;
+        }
+        
+        .btn-secondary:hover {
+            background: #0ef;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 239, 255, 0.4);
+        }
+        
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(14, 239, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .btn-secondary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-outline {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(14, 239, 255, 0.1);
+            border-color: #0ef;
+            color: #0ef;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 239, 255, 0.2);
+        }
+        
+        .btn-outline::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn-outline:hover::after {
+            opacity: 1;
+        }
+        
+        /* Glow effect for special buttons */
+        .btn-glow {
+            animation: pulseGlow 2s infinite;
+        }
+        
+        .btn-glow:hover {
+            animation: none;
+            box-shadow: 0 0 20px rgba(14, 239, 255, 0.6), 0 0 40px rgba(14, 239, 255, 0.4);
+        }
+        
+        /* Floating animation for hero buttons */
+        .btn-float:hover {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* 3D Press Effect */
+        .btn-press {
+            transition: all 0.2s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .btn-press:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+        
+        .btn-press:active {
+            transform: translateY(1px) scale(0.98);
+        }
+        
+        /* Gradient Shift Effect */
+        .btn-gradient-shift {
+            background: linear-gradient(135deg, #0ef, #8e24aa, #00c853);
+            background-size: 200% 200%;
+            transition: background-position 0.8s ease, transform 0.3s ease;
+        }
+        
+        .btn-gradient-shift:hover {
+            background-position: 100% 100%;
+            transform: translateY(-3px);
+        }
+        
+        /* Social Media Button Hover Effects */
+        .social-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(14, 239, 255, 0.3);
+        }
+        
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .social-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Search Button Specific Styles */
+        .search-button {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 200, 83, 0.4);
+            background: linear-gradient(135deg, #00c853, #0ef);
+        }
+        
+        .search-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .search-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Newsletter Button */
+        .newsletter-button {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .newsletter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 10, 10, 0.4);
+            background: rgba(10, 10, 10, 0.95);
+            color: white;
+        }
+        
+        .newsletter-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(14, 239, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .newsletter-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Stats Card Hover Effects */
+        .stats-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(14, 239, 255, 0.15);
+            border-color: rgba(14, 239, 255, 0.3);
+        }
+        
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(14, 239, 255, 0.05), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .stats-card:hover::before {
+            left: 100%;
+        }
+        
+        /* Ripple effect styles */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Modern Newsletter Section Styles */
+        .newsletter-section {
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.05), rgba(142, 36, 170, 0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(14, 239, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(14, 239, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .newsletter-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(14, 239, 255, 0.1), rgba(142, 36, 170, 0.1));
+            filter: blur(40px);
+            z-index: 0;
+        }
+        
         /* Mobile Search Bar Fix */
         @media (max-width: 768px) {
             .search-container {
@@ -239,6 +540,23 @@
                 border-radius: 12px;
             }
         }
+         /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0ef;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00c853;
+        }
     </style>
 </head>
 <body class="bg-background font-poppins gradient-bg">
@@ -255,25 +573,25 @@
             <!-- Desktop Navigation -->
             <div class="hidden lg:flex items-center space-x-1 relative">
                
-                <a href="#home" class="nav-item flex items-center active" data-page="home">
+                <a href="index.html" class="nav-item flex items-center active" data-page="home">
                     <i class="fas fa-home mr-2"></i> Home
                 </a>
-                <a href="#projects" class="nav-item flex items-center" data-page="projects">
-                    <i class="fas fa-th-large mr-2"></i> Projects
-                </a>
-                <a href="#categories" class="nav-item flex items-center" data-page="categories">
-                    <i class="fas fa-tags mr-2"></i> Categories
-                </a>
-                <a href="#submit" class="nav-item flex items-center" data-page="submit">
-                    <i class="fas fa-plus-circle mr-2"></i> Submit
-                </a>
-                <a href="#about" class="nav-item flex items-center" data-page="about">
+                <a href="about.html" class="nav-item flex items-center" data-page="about">
                     <i class="fas fa-info-circle mr-2"></i> About
                 </a>
+                <a href="projects.html" class="nav-item flex items-center" data-page="projects">
+                    <i class="fas fa-th-large mr-2"></i> Projects
+                </a>
+                <a href="categroies.html" class="nav-item flex items-center" data-page="categories">
+                    <i class="fas fa-tags mr-2"></i> Categories
+                </a>
+                <a href="submit.html" class="nav-item flex items-center" data-page="submit">
+                    <i class="fas fa-plus-circle mr-2"></i> Submit
+                </a>    
             </div>
             
             <div class="flex items-center space-x-4">
-                <button class="hidden md:flex bg-gradient-to-r from-primary to-accent-purple text-background px-5 py-2.5 rounded-xl font-medium hover:opacity-90 transition duration-300 items-center shadow-lg">
+                <button class="btn-primary hidden md:flex text-background px-5 py-2.5 rounded-xl font-medium transition duration-300 items-center shadow-lg">
                     <i class="fas fa-rocket mr-2"></i> Get Started
                 </button>
                 <button id="menuToggle" class="lg:hidden text-white bg-secondary/50 p-2 rounded-lg">
@@ -299,25 +617,25 @@
         </div>
         
         <div class="flex flex-col mb-8">
-            <a href="#home" class="mobile-nav-item active" data-page="home">
+            <a href="index.html" class="mobile-nav-item active" data-page="home">
                 <i class="fas fa-home mr-3 w-6 text-center"></i> Home
             </a>
-            <a href="#projects" class="mobile-nav-item" data-page="projects">
+            <a href="about.html" class="mobile-nav-item" data-page="about">
+                <i class="fas fa-info-circle mr-3 w-6 text-center"></i> About
+            </a>
+            <a href="projects.html" class="mobile-nav-item" data-page="projects">
                 <i class="fas fa-th-large mr-3 w-6 text-center"></i> Projects
             </a>
-            <a href="#categories" class="mobile-nav-item" data-page="categories">
+            <a href="categories.html" class="mobile-nav-item" data-page="categories">
                 <i class="fas fa-tags mr-3 w-6 text-center"></i> Categories
             </a>
-            <a href="#submit" class="mobile-nav-item" data-page="submit">
+            <a href="submit.html" class="mobile-nav-item" data-page="submit">
                 <i class="fas fa-plus-circle mr-3 w-6 text-center"></i> Submit
-            </a>
-            <a href="#about" class="mobile-nav-item" data-page="about">
-                <i class="fas fa-info-circle mr-3 w-6 text-center"></i> About
             </a>
         </div>
         
         <div class="absolute bottom-6 left-6 right-6">
-            <button class="w-full bg-gradient-to-r from-primary to-accent-purple text-background py-3 rounded-xl font-medium hover:opacity-90 transition duration-300 flex items-center justify-center shadow-lg">
+            <button class="btn-primary w-full text-background py-3 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg">
                 <i class="fas fa-rocket mr-2"></i> Get Started
             </button>
         </div>
@@ -341,17 +659,17 @@
             <div class="max-w-2xl mx-auto mb-12 animate-fade-in">
                 <div class="search-container flex flex-col md:flex-row md:relative">
                     <input type="text" placeholder="Search projects, frameworks, tools..." class="search-input w-full py-4 px-6 rounded-2xl bg-secondary/50 text-white border border-gray-700 focus:border-primary focus:outline-none transition duration-300 backdrop-blur-sm">
-                    <button class="search-button bg-gradient-to-r from-primary to-accent-green text-background px-6 py-2 rounded-2xl font-medium hover:opacity-90 transition duration-300 flex items-center justify-center md:absolute md:right-2 md:top-2 md:w-auto">
+                    <button class="search-button btn-primary text-background px-6 py-2 rounded-2xl font-medium flex items-center justify-center md:absolute md:right-2 md:top-2 md:w-auto">
                         <i class="fas fa-search mr-2"></i> Search
                     </button>
                 </div>
             </div>
             
             <div class="flex flex-wrap justify-center gap-4 animate-fade-in">
-                <button class="bg-gradient-to-r from-primary to-accent-green text-background px-6 py-3 rounded-xl font-medium hover:opacity-90 transition duration-300 flex items-center shadow-lg">
+                <button class="btn-primary btn-float text-background px-6 py-3 rounded-xl font-medium flex items-center shadow-lg mx-2 mb-3">
                     <i class="fas fa-star mr-2"></i> Explore Projects
                 </button>
-                <button class="bg-transparent border border-primary text-primary px-6 py-3 rounded-xl font-medium hover:bg-primary hover:text-background transition duration-300 flex items-center">
+                <button class="btn-secondary px-6 py-3 rounded-xl font-medium flex items-center mx-2 mb-3">
                     <i class="fas fa-plus mr-2"></i> Submit Project
                 </button>
             </div>
@@ -414,7 +732,7 @@
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-green">C++</span>
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-purple">Windows</span>
                     </div>
-                    <button class="w-full bg-background text-white py-2 rounded-lg hover:bg-primary hover:text-background transition duration-300 flex items-center justify-center">
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300 flex items-center justify-center">
                         <i class="fas fa-external-link-alt mr-2"></i> View Details
                     </button>
                 </div>
@@ -441,7 +759,7 @@
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-green">Python</span>
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-purple">Deep Learning</span>
                     </div>
-                    <button class="w-full bg-background text-white py-2 rounded-lg hover:bg-primary hover:text-background transition duration-300 flex items-center justify-center">
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300 flex items-center justify-center">
                         <i class="fas fa-external-link-alt mr-2"></i> View Details
                     </button>
                 </div>
@@ -468,7 +786,7 @@
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-green">JavaScript</span>
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-purple">Framework</span>
                     </div>
-                    <button class="w-full bg-background text-white py-2 rounded-lg hover:bg-primary hover:text-background transition duration-300 flex items-center justify-center">
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300 flex items-center justify-center">
                         <i class="fas fa-external-link-alt mr-2"></i> View Details
                     </button>
                 </div>
@@ -495,7 +813,7 @@
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-green">PHP</span>
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-purple">Framework</span>
                     </div>
-                    <button class="w-full bg-background text-white py-2 rounded-lg hover:bg-primary hover:text-background transition duration-300 flex items-center justify-center">
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300 flex items-center justify-center">
                         <i class="fas fa-external-link-alt mr-2"></i> View Details
                     </button>
                 </div>
@@ -522,7 +840,7 @@
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-green">Go</span>
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-purple">Containers</span>
                     </div>
-                    <button class="w-full bg-background text-white py-2 rounded-lg hover:bg-primary hover:text-background transition duration-300 flex items-center justify-center">
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300 flex items-center justify-center">
                         <i class="fas fa-external-link-alt mr-2"></i> View Details
                     </button>
                 </div>
@@ -549,14 +867,14 @@
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-green">Python</span>
                         <span class="bg-background px-3 py-1 rounded-full text-xs text-accent-purple">Framework</span>
                     </div>
-                    <button class="w-full bg-background text-white py-2 rounded-lg hover:bg-primary hover:text-background transition duration-300 flex items-center justify-center">
+                    <button class="btn-outline w-full py-2 rounded-lg transition duration-300 flex items-center justify-center">
                         <i class="fas fa-external-link-alt mr-2"></i> View Details
                     </button>
                 </div>
             </div>
             
             <div class="text-center mt-12">
-                <button class="bg-gradient-to-r from-primary to-accent-purple text-background px-8 py-3 rounded-xl font-medium hover:opacity-90 transition duration-300 flex items-center mx-auto shadow-lg">
+                <button class="btn-gradient-shift text-background px-8 py-3 rounded-xl font-medium flex items-center mx-auto shadow-lg">
                     <i class="fas fa-th-large mr-2"></i> View All Projects
                 </button>
             </div>
@@ -729,19 +1047,20 @@
         </div>
     </section>
 
-    <!-- Newsletter Section -->
+    <!-- Newsletter Section - Previous Design with Current Background -->
     <section class="py-16 px-4">
         <div class="container mx-auto max-w-4xl">
-            <div class="bg-gradient-to-r from-primary to-accent-purple rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full"></div>
-                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-white/10 rounded-full"></div>
+            <div class="newsletter-section rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
+                <!-- Background Decorations -->
+                <div class="newsletter-decoration w-72 h-72 -top-20 -right-10"></div>
+                <div class="newsletter-decoration w-64 h-64 -bottom-20 -left-10"></div>
                 
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-background relative z-10">Stay Updated</h2>
-                <p class="text-background text-lg mb-8 max-w-2xl mx-auto relative z-10">Get the latest open source projects delivered to your inbox every week. No spam, just quality projects.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white relative z-10">Stay Updated</h2>
+                <p class="text-gray-300 text-lg mb-8 max-w-2xl mx-auto relative z-10">Get the latest open source projects delivered to your inbox every week. No spam, just quality projects.</p>
                 
                 <div class="newsletter-form max-w-md mx-auto flex flex-col md:flex-row relative z-10">
-                    <input type="email" placeholder="Your email address" class="newsletter-input flex-grow py-3 px-4 bg-white text-background focus:outline-none rounded-2xl md:rounded-l-2xl md:rounded-r-none">
-                    <button class="newsletter-button bg-background text-primary px-6 py-3 font-medium hover:bg-opacity-90 transition duration-300 rounded-2xl md:rounded-r-2xl md:rounded-l-none">
+                    <input type="email" placeholder="Your email address" class="newsletter-input flex-grow py-3 px-4 bg-white/10 border border-gray-700 text-white focus:outline-none focus:border-primary transition duration-300 rounded-2xl md:rounded-l-2xl md:rounded-r-none backdrop-blur-sm">
+                    <button class="newsletter-button bg-primary text-background px-6 py-3 font-medium transition duration-300 rounded-2xl md:rounded-r-2xl md:rounded-l-none">
                         Subscribe
                     </button>
                 </div>
@@ -786,16 +1105,16 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Connect</h3>
                     <div class="flex space-x-4 mb-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary hover:bg-opacity-10 transition duration-300">
+                        <a href="#" class="social-btn w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 transition duration-300">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary hover:bg-opacity-10 transition duration-300">
+                        <a href="#" class="social-btn w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 transition duration-300">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary hover:bg-opacity-10 transition duration-300">
+                        <a href="#" class="social-btn w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 transition duration-300">
                             <i class="fab fa-discord"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary hover:bg-opacity-10 transition duration-300">
+                        <a href="#" class="social-btn w-10 h-10 rounded-full bg-background flex items-center justify-center text-gray-400 transition duration-300">
                             <i class="fab fa-linkedin"></i>
                         </a>
                     </div>
@@ -834,33 +1153,6 @@
             sidebarOverlay.classList.remove('open');
             document.body.style.overflow = '';
         });
-        
-        // Active page highlighting and navigation indicator
-        const navItems = document.querySelectorAll('.nav-item, .mobile-nav-item');
-        const navIndicator = document.getElementById('navIndicator');
-        
-        function setActivePage() {
-            const currentHash = window.location.hash || '#home';
-            
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href') === currentHash) {
-                    item.classList.add('active');
-                    
-                    // Update navigation indicator position for desktop
-                    if (window.innerWidth >= 1024 && item.classList.contains('nav-item')) {
-                        const itemRect = item.getBoundingClientRect();
-                        const navRect = item.parentElement.getBoundingClientRect();
-                        
-                        navIndicator.style.width = `${itemRect.width}px`;
-                        navIndicator.style.left = `${itemRect.left - navRect.left}px`;
-                    }
-                }
-            });
-        }
-        
-        // Set active page on load
-        setActivePage();
         
         // Update active page when hash changes
         window.addEventListener('hashchange', setActivePage);
@@ -916,6 +1208,35 @@
                     history.pushState(null, null, targetId);
                     setActivePage();
                 }
+            });
+        });
+
+        // Enhanced button interactions with ripple effect
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-outline, .search-button, .newsletter-button, .social-btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Create ripple element
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+                    
+                    this.appendChild(ripple);
+                    
+                    // Remove ripple after animation
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
             });
         });
     </script>
